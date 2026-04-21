@@ -1,78 +1,78 @@
 /*
-Aim:
-To implement the First Fit algorithm for bin packing, where each item
-is placed in the first available bin that has enough space.
+Objective:
+Implement the First Fit bin packing approach, where each item
+is assigned to the earliest bin that can accommodate it.
 */
 
 #include <stdio.h>
 
-// Function to apply First Fit strategy
+// Function to execute First Fit method
 void applyFirstFit(int sizes[], int totalItems, int maxCapacity)
 {
-    int remaining[totalItems];   // Stores remaining space in each bin
+    int remaining[totalItems];   // Tracks available space in bins
     int binsUsed = 0;
 
-    // Initialize all bins with full capacity
+    // Set all bins to full capacity initially
     for (int i = 0; i < totalItems; i++)
     {
         remaining[i] = maxCapacity;
     }
 
-    // Traverse through each item
+    // Process each item one by one
     for (int i = 0; i < totalItems; i++)
     {
         int isPlaced = 0;
 
-        // Try placing item in existing bins
+        // Check existing bins for placement
         for (int j = 0; j < binsUsed; j++)
         {
             if (remaining[j] >= sizes[i])
             {
                 remaining[j] -= sizes[i];
-                printf("Item %d (size %d) -> Bin %d\n",
+                printf("Item %d with size %d placed in bin %d\n",
                        i + 1, sizes[i], j + 1);
                 isPlaced = 1;
                 break;
             }
         }
 
-        // If item cannot fit in any existing bin, create new bin
+        // If no suitable bin is found, open a new bin
         if (!isPlaced)
         {
             remaining[binsUsed] = maxCapacity - sizes[i];
-            printf("Item %d (size %d) -> Bin %d\n",
+            printf("Item %d with size %d placed in new bin %d\n",
                    i + 1, sizes[i], binsUsed + 1);
             binsUsed++;
         }
     }
 
-    printf("Total bins required: %d\n", binsUsed);
+    printf("Total number of bins used: %d\n", binsUsed);
 }
 
 int main()
 {
     int n, capacity;
 
-    printf("Enter number of items: ");
+    printf("Enter total items count: ");
     scanf("%d", &n);
 
     int items[n];
 
-    printf("Enter bin capacity: ");
+    printf("Enter capacity of each bin: ");
     scanf("%d", &capacity);
 
-    printf("Enter item sizes:\n");
+    printf("Enter sizes of the items:\n");
 
     for (int i = 0; i < n; i++)
     {
-        printf("Item %d: ", i + 1);
+        printf("Size for item %d: ", i + 1);
         scanf("%d", &items[i]);
 
-        // Validate input
+        // Ensure item fits within capacity
         if (items[i] > capacity)
         {
-            printf("Invalid! Item exceeds bin capacity. Re-enter.\n");
-            i--; // retry same item
+            printf("Error: Size exceeds bin capacity. Try again.\n");
+            i--; // repeat entry for same index
         }
     }
 
