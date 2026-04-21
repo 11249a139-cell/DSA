@@ -1,14 +1,14 @@
 /*
-Aim:
-To implement Prim’s algorithm to find the Minimum Spanning Tree (MST)
-of a weighted graph using a greedy approach.
+Objective:
+Use Prim's algorithm to compute the Minimum Spanning Tree (MST)
+of a weighted graph by progressively selecting minimum edges.
 */
 
 #include <stdio.h>
 
-#define V 5   // Number of vertices
+#define V 5   // Total number of vertices
 
-// Function to find the vertex with minimum key value
+// Function to get the vertex with the smallest key value
 int findMinVertex(int key[], int visited[])
 {
     int min = 999999;
@@ -26,46 +26,46 @@ int findMinVertex(int key[], int visited[])
     return minIndex;
 }
 
-// Function to display MST and total cost
+// Function to print MST details and its total weight
 void displayMST(int parent[], int graph[V][V])
 {
-    printf("\nPrim's Minimum Spanning Tree:\n");
-    printf("Edge \tWeight\n");
+    printf("\nMinimum Spanning Tree using Prim's Algorithm:\n");
+    printf("Edge   |   Cost\n");
 
     int totalCost = 0;
 
     for (int i = 1; i < V; i++)
     {
-        printf("%d - %d \t%d\n", parent[i], i, graph[i][parent[i]]);
+        printf("%d -> %d   |   %d\n", parent[i], i, graph[i][parent[i]]);
         totalCost += graph[i][parent[i]];
     }
 
-    printf("Total Cost = %d\n", totalCost);
+    printf("Overall MST cost: %d\n", totalCost);
 }
 
-// Prim's Algorithm implementation
+// Function implementing Prim's algorithm
 void applyPrim(int graph[V][V])
 {
-    int parent[V];   // Stores MST
-    int key[V];      // Minimum weight values
-    int visited[V];  // Tracks included vertices
+    int parent[V];   // Stores MST structure
+    int key[V];      // Holds minimum edge weights
+    int visited[V];  // Marks visited vertices
 
-    // Initialize arrays
+    // Initialize values
     for (int i = 0; i < V; i++)
     {
         key[i] = 999999;
         visited[i] = 0;
     }
 
-    key[0] = 0;     // Start from vertex 0
-    parent[0] = -1; // Root node
+    key[0] = 0;     // Begin from vertex 0
+    parent[0] = -1; // Root of MST
 
     for (int count = 0; count < V - 1; count++)
     {
         int u = findMinVertex(key, visited);
         visited[u] = 1;
 
-        // Update adjacent vertices
+        // Update keys of adjacent vertices
         for (int v = 0; v < V; v++)
         {
             if (graph[u][v] && !visited[v] && graph[u][v] < key[v])
@@ -81,7 +81,7 @@ void applyPrim(int graph[V][V])
 
 int main()
 {
-    // Adjacency matrix representation of graph
+    // Graph represented as adjacency matrix
     int graph[V][V] = {
         {0, 2, 3, 0, 0},
         {2, 0, 5, 3, 0},
