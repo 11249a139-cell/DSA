@@ -1,17 +1,17 @@
 /*
-Aim:
-To implement Kruskal’s algorithm to find the Minimum Spanning Tree (MST)
-of a weighted graph using a greedy approach.
+Objective:
+Apply Kruskal's method to determine the Minimum Spanning Tree (MST)
+of a weighted graph using a greedy selection technique.
 */
 
 #include <stdio.h>
 
-#define V 5   // Number of vertices
-#define E 6   // Number of edges
+#define V 5   // Total vertices in the graph
+#define E 6   // Total edges in the graph
 
-int parent[V];  // Disjoint set array
+int parent[V];  // Array for union-find structure
 
-// Function to find the representative (leader) of a set
+// Function to locate the root of a vertex
 int findRoot(int vertex)
 {
     while (parent[vertex] != vertex)
@@ -21,7 +21,7 @@ int findRoot(int vertex)
     return vertex;
 }
 
-// Function to unite two sets
+// Function to merge two subsets
 void unionSets(int u, int v)
 {
     int rootU = findRoot(u);
@@ -29,7 +29,7 @@ void unionSets(int u, int v)
     parent[rootU] = rootV;
 }
 
-// Function to sort edges based on weight (Bubble Sort)
+// Function to arrange edges in ascending order of weight (Bubble Sort)
 void sortByWeight(int edgeList[E][3])
 {
     for (int i = 0; i < E - 1; i++)
@@ -38,7 +38,7 @@ void sortByWeight(int edgeList[E][3])
         {
             if (edgeList[j][2] > edgeList[j + 1][2])
             {
-                // Swap entire edge (u, v, w)
+                // Swap complete edge details
                 for (int k = 0; k < 3; k++)
                 {
                     int temp = edgeList[j][k];
@@ -50,12 +50,12 @@ void sortByWeight(int edgeList[E][3])
     }
 }
 
-// Kruskal's algorithm implementation
+// Implementation of Kruskal's algorithm
 void applyKruskal(int edgeList[E][3])
 {
     sortByWeight(edgeList);
 
-    // Initialize disjoint sets
+    // Initialize each vertex as its own parent
     for (int i = 0; i < V; i++)
     {
         parent[i] = i;
@@ -64,7 +64,7 @@ void applyKruskal(int edgeList[E][3])
     int edgeCount = 0;
     int totalCost = 0;
 
-    printf("Edges selected for MST:\n");
+    printf("Selected edges in the Minimum Spanning Tree:\n");
 
     for (int i = 0; i < E && edgeCount < V - 1; i++)
     {
@@ -72,22 +72,22 @@ void applyKruskal(int edgeList[E][3])
         int v = edgeList[i][1];
         int weight = edgeList[i][2];
 
-        // Check if adding this edge forms a cycle
+        // Ensure no cycle is formed before adding edge
         if (findRoot(u) != findRoot(v))
         {
-            printf("%d -- %d  (Weight: %d)\n", u, v, weight);
+            printf("Edge %d - %d with cost %d added\n", u, v, weight);
             unionSets(u, v);
             totalCost += weight;
             edgeCount++;
         }
     }
 
-    printf("Total cost of MST: %d\n", totalCost);
+    printf("Final MST cost: %d\n", totalCost);
 }
 
 int main()
 {
-    // Edge format: {source, destination, weight}
+    // Edge representation: {start, end, weight}
     int edges[E][3] = {
         {0, 1, 2}, {0, 2, 3}, {1, 2, 5},
         {1, 3, 3}, {2, 4, 4}, {3, 4, 2}
