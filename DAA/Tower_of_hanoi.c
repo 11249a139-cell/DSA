@@ -13,7 +13,7 @@ void solveTOH(int disks, char source, char auxiliary, char destination)
     // Base case: only one disk
     if (disks == 1)
     {
-        printf("Move disk 1 from %c to %c\n", source, destination);
+        printf("Move Disk 1 from %c --> %c\n", source, destination);
         return;
     }
 
@@ -21,7 +21,7 @@ void solveTOH(int disks, char source, char auxiliary, char destination)
     solveTOH(disks - 1, source, destination, auxiliary);
 
     // Step 2: Move the largest disk to destination
-    printf("Move disk %d from %c to %c\n", disks, source, destination);
+    printf("Move Disk %d from %c --> %c\n", disks, source, destination);
 
     // Step 3: Move n-1 disks from auxiliary to destination
     solveTOH(disks - 1, auxiliary, source, destination);
@@ -37,13 +37,17 @@ int main()
     // Input validation
     if (n <= 0)
     {
-        printf("Invalid input. Enter a positive number.\n");
+        printf("Error: Number of disks must be a positive integer.\n");
         return 1;
     }
 
-    printf("\nSequence of moves:\n");
+    printf("\nTower of Hanoi Solution\n");
+    printf("Source: S | Auxiliary: A | Destination: D\n");
+    printf("----------------------------------------\n");
 
     solveTOH(n, 'S', 'A', 'D');
+
+    printf("\nAll disks have been successfully moved to destination.\n");
 
     return 0;
 }
