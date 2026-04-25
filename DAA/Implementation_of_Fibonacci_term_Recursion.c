@@ -18,19 +18,19 @@ int main()
 {
     int n;
 
-    printf("Enter the value of n: ");
+    printf("Enter the position (n): ");
     scanf("%d", &n);
 
     // Input validation
     if (n < 0)
     {
-        printf("Invalid input. Please enter a non-negative integer.\n");
+        printf("Error: Please enter a non-negative integer.\n");
         return 1;
     }
 
     int result = fibonacci(n);
 
-    printf("Nth Fibonacci term = %d\n", result);
+    printf("\nThe Fibonacci number at position %d is: %d\n", n, result);
 
     return 0;
 }
