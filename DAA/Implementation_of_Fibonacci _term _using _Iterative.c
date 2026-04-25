@@ -11,16 +11,16 @@ int main()
     int n;
     int first = 0, second = 1, next;
 
-    printf("Enter the number of terms (n): ");
+    printf("Enter number of terms: ");
 
     // Input validation
     if (scanf("%d", &n) != 1 || n <= 0)
     {
-        printf("Invalid input. Please enter a positive integer.\n");
+        printf("Error: Please enter a valid positive integer.\n");
         return 0;
     }
 
-    printf("Fibonacci Series: ");
+    printf("\nFibonacci series up to %d terms:\n", n);
 
     // Print first term
     if (n >= 1)
@@ -43,9 +43,9 @@ int main()
 
     // Display nth term
     if (n == 1)
-        printf("\nFibonacci term %d = %d\n", n, first);
+        printf("\n\nThe %dth Fibonacci number is: %d\n", n, first);
     else
-        printf("\nFibonacci term %d = %d\n", n, second);
+        printf("\n\nThe %dth Fibonacci number is: %d\n", n, second);
 
     return 0;
 }
