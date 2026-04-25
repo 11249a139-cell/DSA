@@ -38,30 +38,30 @@ int main()
     int n;
     float capacity;
 
-    printf("Enter number of items: ");
+    printf("Enter the total number of items: ");
     scanf("%d", &n);
 
     if (n <= 0)
     {
-        printf("Invalid number of items.\n");
+        printf("Error: Number of items must be greater than zero.\n");
         return 1;
     }
 
     struct Product items[n];
 
-    printf("Enter weight and value of each item:\n");
+    printf("\nEnter weight and value for each item:\n");
 
     // Input item details
     for (int i = 0; i < n; i++)
     {
-        printf("Item %d: ", i + 1);
+        printf("Item %d -> Weight and Value: ", i + 1);
         scanf("%d %d", &items[i].weight, &items[i].value);
 
         // Calculate value-to-weight ratio
         items[i].ratio = (float)items[i].value / items[i].weight;
     }
 
-    printf("Enter knapsack capacity: ");
+    printf("\nEnter the capacity of the knapsack: ");
     scanf("%f", &capacity);
 
     // Sort items based on ratio
@@ -69,24 +69,29 @@ int main()
 
     float maxProfit = 0.0;
 
+    printf("\nProcessing items based on highest value-to-weight ratio...\n");
+
     // Apply greedy selection
     for (int i = 0; i < n; i++)
     {
         if (capacity >= items[i].weight)
         {
-            // Take full item
+            printf("Taking full item %d (Value = %d, Weight = %d)\n",
+                   i + 1, items[i].value, items[i].weight);
+
             maxProfit += items[i].value;
             capacity -= items[i].weight;
         }
         else
         {
-            // Take fractional part
+            printf("Taking fractional part of item %d\n", i + 1);
+
             maxProfit += items[i].ratio * capacity;
             break;
         }
     }
 
-    printf("Maximum profit = %.2f\n", maxProfit);
+    printf("\nMaximum obtainable profit = %.2f\n", maxProfit);
 
     return 0;
 }
